@@ -92,7 +92,6 @@ COPY --chown=user . $HOME/app
 
 RUN chmod +x start_server.sh
 
-COPY --chown=user login.html /home/user/miniconda/lib/python3.9/site-packages/jupyter_server/templates/login.html
 
 ENV PYTHONUNBUFFERED=1 \
 	GRADIO_ALLOW_FLAGGING=never \
