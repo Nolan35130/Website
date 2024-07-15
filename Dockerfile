@@ -73,6 +73,7 @@ RUN --mount=target=/root/packages.txt,source=packages.txt \
     xargs -r -a /root/packages.txt apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
+COPY on_startup.sh /root/on_startup.sh
 RUN --mount=target=/root/on_startup.sh,source=on_startup.sh,readwrite \
 	bash /root/on_startup.sh
 
@@ -85,12 +86,14 @@ RUN mkdir /data && chown user:user /data
 USER user
 
 # Python packages
+COPY requirements.txt requirements.txt
 RUN --mount=target=requirements.txt,source=requirements.txt \
     pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Copy the current directory contents into the container at $HOME/app setting the owner to the user
 COPY --chown=user . $HOME/app
 
+COPY start_server.sh start_server.sh
 RUN chmod +x start_server.sh
 
 
