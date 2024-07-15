@@ -67,6 +67,7 @@ USER root
 
 # User Debian packages
 ## Security warning : Potential user code executed as root (build time)
+COPY packages.txt /root/packages.txt
 RUN --mount=target=/root/packages.txt,source=packages.txt \
     apt-get update && \
     xargs -r -a /root/packages.txt apt-get install -y --no-install-recommends \
