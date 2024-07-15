@@ -86,13 +86,13 @@ RUN mkdir /data && chown user:user /data
 USER user
 
 # Python packages
+COPY requirements.txt requirements.txt
 RUN --mount=target=requirements.txt,source=requirements.txt \
     pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Copy the current directory contents into the container at $HOME/app setting the owner to the user
 COPY --chown=user . $HOME/app
-
-RUN chmod +x start_server.sh
+COPY start_server.sh start_server.sh
 
 
 ENV PYTHONUNBUFFERED=1 \
